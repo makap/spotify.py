@@ -13,7 +13,6 @@ class TunigoRequest(Emitter):
     base_url = "https://api.tunigo.com/v3/space/%s?%s"
     base_params = {
         'suppress_response_codes': 1,
-        'locale':   'en',
         'product':  'premium',
         'version':  '6.31.1',
         'platform': 'web'
@@ -53,6 +52,7 @@ class TunigoRequest(Emitter):
     def prepare(self):
         params = set_defaults(self.params, self.base_params)
         params['dt'] = time.strftime("%Y-%m-%dT%H:%M:%S")
+        params['locale'] = self.sp.country or 'us'
         params['region'] = self.sp.country or 'us'
 
         query = urllib.urlencode(params)
