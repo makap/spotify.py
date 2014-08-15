@@ -26,3 +26,19 @@ class Explore(Component):
         })
 
         return self.request_wrapper(request, callback)
+
+    def genres(self, page=0, per_page=100, callback=None):
+        request = TunigoRequest(self.sp, 'genres', {
+            'page': page,
+            'per_page': per_page
+        })
+
+        return self.request_wrapper(request, callback)
+
+    def genre(self, templateName="toplists", page=0, per_page=100, callback=None):
+        request = TunigoRequest(self.sp, templateName, {
+            'page': page,
+            'per_page': per_page
+        })
+        
+        return self.request_wrapper(request, callback)
