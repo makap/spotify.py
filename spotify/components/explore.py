@@ -35,10 +35,11 @@ class Explore(Component):
 
         return self.request_wrapper(request, callback)
 
-    def genre(self, templateName="toplists", page=0, per_page=100, callback=None):
-        request = TunigoRequest(self.sp, templateName, {
+    def genre(self, mainGenre="toplists", subGenre="", page=0, per_page=100, callback=None):
+        request = TunigoRequest(self.sp, mainGenre, {
             'page': page,
-            'per_page': per_page
+            'per_page': per_page,
+            'filter': subGenre
         })
         
         return self.request_wrapper(request, callback)

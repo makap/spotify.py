@@ -6,6 +6,7 @@ from spotify.objects.copyright import Copyright
 from spotify.objects.disc import Disc
 from spotify.objects.external_id import ExternalId
 from spotify.objects.genre import Genre
+from spotify.objects.subgenre import Subgenre
 from spotify.objects.image import Image
 from spotify.objects.image_group import ImageGroup
 from spotify.objects.playlist import Playlist, PlaylistItem
@@ -29,6 +30,7 @@ ALL = [
     'Disc',
     'ExternalId',
     'Genre',
+    'Subgenre',
     'Image',
     'ImageGroup',
     'Playlist',

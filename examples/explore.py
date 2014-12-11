@@ -34,6 +34,8 @@ class App(object):
     def on_genres(self, result):
         for genre in result.items:
             print '[%s] "%s" - %s' % (genre.templateName, genre.name, genre.iconUrl)
+            for subgen in genre.subGenres:
+                print '--- %s' % subgen.name
 
     def on_genre(self, result):
         for playlist in result.items:

@@ -5,11 +5,9 @@ import logging
 log = logging.getLogger(__name__)
 
 
-class Genre(Descriptor):
+class Subgenre(Descriptor):
     name = PropertyProxy
-    templateName = PropertyProxy
-    iconUrl = PropertyProxy
-    subGenres = PropertyProxy('subGenres', 'Subgenre')
+    key = PropertyProxy
 
     type = PropertyProxy
 
@@ -17,14 +15,12 @@ class Genre(Descriptor):
     def __parsers__():
         return [Tunigo]
 
-class Tunigo(Genre):
-    __tag__ = 'genre'
+class Tunigo(Subgenre):
+    __tag__ = 'subgenre'
 
     @classmethod
     def parse(cls, sp, data, parser):
-        return Genre(sp, {
+        return Subgenre(sp, {
             'name': data.get('name'),
-            'templateName': data.get('templateName'),
-            'iconUrl': data.get('iconUrl'),
-            'subGenres': data.get('subGenres')
+            'key': data.get('key')
         }, parser.Tunigo, parser)
