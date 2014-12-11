@@ -1,4 +1,4 @@
-from spotify.components.base import Component
+from spotify.components.base import USER_AGENT,Component
 from spotify.core.helpers import repr_trim
 from spotify.core.request import Request
 
@@ -47,7 +47,7 @@ class Connection(Component, Emitter):
 
         self.reset()
 
-        self.client = Client(self, url)\
+        self.client = Client(self, url, headers=[('User-Agent', USER_AGENT)])\
             .on('open', self.on_open)\
             .on('message', self.on_message)\
             .on('close', self.on_close)
