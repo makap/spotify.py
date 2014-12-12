@@ -52,8 +52,8 @@ class TunigoRequest(Emitter):
     def prepare(self):
         params = set_defaults(self.params, self.base_params)
         params['dt'] = time.strftime("%Y-%m-%dT%H:%M:%S")
-        params['locale'] = self.sp.country or 'us'
-        params['region'] = self.sp.country or 'us'
+        params['locale'] = self.sp.country.lower() or 'us'
+        params['region'] = self.sp.country.lower() or 'us'
 
         query = urllib.urlencode(params)
 
