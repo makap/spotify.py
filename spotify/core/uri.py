@@ -67,7 +67,10 @@ class Uri(object):
 
         id = binascii.hexlify(gid).rjust(32, '0')
 
-        return cls.from_id(type, id)
+        if not type:
+            return id
+        else:
+            return cls.from_id(type, id)
 
     @classmethod
     def from_uri(cls, uri):

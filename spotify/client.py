@@ -5,6 +5,7 @@ from spotify.objects.user import User
 
 from pyemitter import Emitter
 import logging
+import Queue
 
 
 log = logging.getLogger(__name__)
@@ -29,6 +30,9 @@ class Spotify(Component, Emitter):
 
         self.user_info = {}
         self.user = None
+
+        # MP3_160_ENC callback queue
+        self.trackKeyQueue = Queue.Queue()
 
     # User
     @property

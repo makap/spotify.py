@@ -1,4 +1,4 @@
-from spotify.commands import DoWork, PingFlash2
+from spotify.commands import AlbumArt, DoWork, PingFlash2
 
 from pyemitter import Emitter
 import logging
@@ -11,6 +11,7 @@ class CommandManager(Emitter):
         self.sp = sp
 
         self.handlers = {
+            'album_art': AlbumArt(sp),
             'do_work': DoWork(sp),
             'ping_flash2': PingFlash2(sp)
         }

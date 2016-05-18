@@ -1,3 +1,4 @@
+from spotify.components.cryptstream import EncryptedStream
 from spotify.core.helpers import set_defaults, etree_convert
 from spotify.core.uri import Uri
 from spotify.objects.base import Descriptor, PropertyProxy
@@ -87,9 +88,21 @@ class Track(Descriptor):
                  returns the `Request` object.
         :rtype: function or `spotify.core.request.Request`
         """
-        request = self.build('sp/track_uri', 'mp3160', self.uri.to_id())
+        def on_track_uri(response):
+            def on_track_key(key):
+                if callback:
+                    callback(response, EncryptedStream(self.sp, key))
 
-        return self.request_wrapper(request, callback)
+            self.sp.trackKeyQueue.put(on_track_key)
+
+        files = {}
+        for file in self.files:
+            files[file.format] = file
+            log.debug('[%s] File format found: %s', self.uri, file.format)
+
+        request = self.build('sp/track_uri2', self.uri.to_id(), Uri.from_gid(None, files.get(7).file_id))
+
+        return self.request_wrapper(request, on_track_uri)
 
     def track_event(self, lid, event, time):
         """Send the "sp/track_event" event.

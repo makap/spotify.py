@@ -62,7 +62,7 @@ class TrackReference(object):
         # Request the track_uri
         self.metadata.track_uri(self.on_track_uri)
 
-    def on_track_uri(self, response):
+    def on_track_uri(self, response, crypt):
         self.stream_info = response.get('result')
 
         if not self.success:
@@ -82,6 +82,8 @@ class TrackReference(object):
             # Error, log response
             log.debug(self.response.read())
         else:
+            self.crypt = crypt
+
             # Download track for streaming
             self.response_thread = Thread(target=self.run)
             self.response_thread.start()
@@ -95,7 +97,7 @@ class TrackReference(object):
         self.reading = True
 
         while True:
-            chunk = self.response.read(chunk_size)
+            chunk = self.crypt.decrypt(self.response.read(chunk_size))
             #log.debug('[%s] Received %s bytes', self.uri, len(chunk))
 
             self.buffer.extend(chunk)

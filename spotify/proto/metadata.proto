@@ -150,6 +150,7 @@ message AudioFile {
     MP3_320 = 4;
     MP3_160 = 5;
     MP3_96 = 6;
+    MP3_160_ENC = 7;
   }
   optional bytes file_id = 1;
   optional Format format = 2;

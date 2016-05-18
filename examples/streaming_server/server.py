@@ -107,15 +107,13 @@ class Server(object):
         # Update current
         self.current = tr
 
-        r_start, r_end = self.handle_range(tr)
-
         # Update headers
         cherrypy.response.headers['Accept-Ranges'] = 'bytes'
         cherrypy.response.headers['Content-Type'] = tr.response_headers.getheader('Content-Type')
-        cherrypy.response.headers['Content-Length'] = r_end - r_start
+        cherrypy.response.headers['Content-Length'] = tr.response_headers.getheader('Content-Length')
 
         # Progressively return track from buffer
-        return self.stream(tr, r_start, r_end)
+        return self.stream(tr, 0, cherrypy.response.headers['Content-Length'])
 
     track._cp_config = {'response.stream': True}
 
@@ -158,41 +156,6 @@ class Server(object):
             yield chunk
 
         log.debug('[%s] Stream Complete', tr.uri)
-
-    def handle_range(self, tr):
-        r_start, r_end = self.parse_range(cherrypy.request.headers.get('Range'))
-
-        if not r_start and not r_end:
-            return 0, tr.stream_length - 1
-
-        if r_end is None or r_end >= tr.stream_length:
-            r_end = tr.stream_length - 1
-
-        log.debug('[%s] Range: %s - %s', tr.uri, r_start, r_end)
-
-        cherrypy.response.headers['Content-Range'] = 'bytes %s-%s/%s' % (r_start, r_end, tr.stream_length)
-        cherrypy.response.status = 206
-
-        return r_start, r_end
-
-    @staticmethod
-    def parse_range(value):
-        value = value.split('=')
-
-        if len(value) != 2:
-            return 0, None
-
-        range_type, range = value
-
-        if range_type != 'bytes':
-            return 0, None
-
-        range = range.split('-')
-
-        if len(range) != 2:
-            return 0, None
-
-        return int(range[0] or 0), int(range[1]) if range[1] else None
 
     def get_track_url(self, uri):
         return "http://%s:%d/track/%s.mp3" % (

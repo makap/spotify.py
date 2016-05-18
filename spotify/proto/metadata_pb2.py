@@ -168,6 +168,10 @@ _AUDIOFILE_FORMAT = _descriptor.EnumDescriptor(
       name='MP3_96', index=6, number=6,
       options=None,
       type=None),
+    _descriptor.EnumValueDescriptor(
+      name='MP3_160_ENC', index=7, number=7,
+      options=None,
+      type=None),
   ],
   containing_type=None,
   options=None,
