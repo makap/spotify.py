@@ -5,6 +5,7 @@ from spotify.objects.base import Descriptor, PropertyProxy
 from spotify.objects.image import Image
 from spotify.proto import playlist4changes_pb2
 from spotify.proto import playlist4content_pb2
+from spotify.proto import search_pb2
 
 import logging
 
@@ -18,6 +19,13 @@ def create_image(uri):
         return None
 
     return Image.from_id(uri.code)
+
+class SearchPlaylist(Descriptor):
+    __protobuf__ = search_pb2.Playlist
+
+    uri = PropertyProxy(func=Uri.from_uri)
+    name = PropertyProxy
+    image = PropertyProxy('image', 'Image')
 
 
 class PlaylistItem(Descriptor):

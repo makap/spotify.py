@@ -1,0 +1,36 @@
+package spotify.search.proto;
+import "metadata.proto";
+
+message SearchRequest {
+    enum Type {
+        TRACK = 0;
+        ALBUM = 1;
+        ARTIST = 2;
+        PLAYLIST = 3;
+        USER = 4;
+    }
+    optional string query = 1;
+    optional Type type = 2;
+    optional int32 limit = 3;
+    optional int32 offset = 4;
+}
+message Playlist {
+    optional string uri = 1;
+    optional string name = 2;
+    optional spotify.metadata.proto.Image image = 3;
+}
+message User {
+    optional string username = 1;
+    optional string full_name = 2;
+    optional spotify.metadata.proto.Image image = 3;
+    optional sint32 followers = 4;
+}
+message SearchReply {
+    optional sint32 hits = 1;
+    repeated spotify.metadata.proto.Track track = 2;
+    repeated spotify.metadata.proto.Album album = 3;
+    repeated spotify.metadata.proto.Artist artist = 4;
+    repeated Playlist playlist = 5;
+    optional string did_you_mean = 6;
+    repeated User user = 7;
+}

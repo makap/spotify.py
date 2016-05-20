@@ -170,7 +170,7 @@ class Spotify(Component, Emitter):
         return self.components.metadata.collection(username, source, params, callback)
 
     # Search
-    def search(self, query, query_type='all', start=0, count=50, callback=None):
+    def search(self, query, query_type='tracks', start=0, count=10, callback=None):
         return self.components.search.search(query, query_type, start, count, callback)
 
     # Explore

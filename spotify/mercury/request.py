@@ -95,7 +95,7 @@ class MercuryRequest(Request):
 
             return
 
-        if self.request_payload and header.content_type != 'vnd.spotify/mercury-mget-reply':
+        if self.multi and header.content_type != 'vnd.spotify/mercury-mget-reply':
             self.emit('error', 'Server Error: Server didn\'t send a multi-GET reply for a multi-GET request!')
             return
 

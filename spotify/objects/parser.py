@@ -9,11 +9,11 @@ from spotify.objects.genre import Genre
 from spotify.objects.subgenre import Subgenre
 from spotify.objects.image import Image
 from spotify.objects.image_group import ImageGroup
-from spotify.objects.playlist import Playlist, PlaylistItem
+from spotify.objects.playlist import Playlist, PlaylistItem, SearchPlaylist
 from spotify.objects.restriction import Restriction
 from spotify.objects.top_tracks import TopTracks
 from spotify.objects.track import Track
-from spotify.objects.user import User
+from spotify.objects.user import User, SearchUser
 
 import logging
 import sys
@@ -36,6 +36,8 @@ ALL = [
     'Playlist',
     'PlaylistItem',
     'Restriction',
+    'SearchPlaylist',
+    'SearchUser',
     'TopTracks',
     'Track',
     'User'
