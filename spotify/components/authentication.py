@@ -28,11 +28,12 @@ class Authentication(Component, Emitter):
         self.credentials = {'type': 'anonymous'}
         self.landing_params = None
 
-    def login(self, username=None, password=None):
+    def login(self, username, password, recaptcha):
         if username and password:
             self.credentials = {
                 'username': username,
                 'password': password,
+                'recaptcha': recaptcha,
                 'type': 'sp'
             }
 
